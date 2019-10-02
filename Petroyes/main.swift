@@ -8,4 +8,5 @@
 
 import Foundation
 
-Game.initiateNewGame()
+let game = Game()
+game.initiateNewGame()
