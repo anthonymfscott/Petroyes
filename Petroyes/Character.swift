@@ -15,9 +15,8 @@ class Character {
     var strength = 0
     var description = ""
     
-    func giveName() {
-        print("Choose a name for your \(job):")
-        if let name = readLine() {
+    init(name: String?) {
+        if let name = name {
             self.name = name
             Game.existingCharacterNames.append(name)
         }
@@ -42,8 +41,8 @@ class Character {
 
 // CHARACTER'S SUBCLASSES:
 class Mercenary: Character {
-    override init() {
-        super.init()
+    override init(name: String?) {
+        super.init(name: name)
         job = "mercenary"
         hp = 100
         strength = 10
@@ -52,8 +51,8 @@ class Mercenary: Character {
 }
 
 class Arbalester: Character {
-    override init() {
-        super.init()
+    override init(name: String?){
+        super.init(name: name)
         job = "arbalester"
         hp = 90
         strength = 12
@@ -62,8 +61,8 @@ class Arbalester: Character {
 }
 
 class Pyromaniac: Character {
-    override init() {
-        super.init()
+    override init(name: String?) {
+        super.init(name: name)
         job = "pyromaniac"
         hp = 80
         strength = 15
@@ -72,8 +71,8 @@ class Pyromaniac: Character {
 }
 
 class Magus: Character {
-    override init() {
-        super.init()
+    override init(name: String?) {
+        super.init(name: name)
         job = "magus"
         hp = 70
         strength = 5
