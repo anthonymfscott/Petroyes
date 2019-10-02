@@ -9,22 +9,21 @@
 import Foundation
 
 class Game {
-    // Enumeration to deal with the game's state
-    enum State {
-        case ongoing, over
-    }
-    
+    // MARK: Properties
     // A series of properties that will be useful to the gameplay
+    enum State {
+           case ongoing, over
+       }
     var players: [Player] = [] // An array containing the players
-    let playableCharacters = [Mercenary(name: nil), Arbalester(name: nil), Pyromaniac(name: nil), Magus(name: nil)] // An array containing the character's types
     var numberOfRounds = 0 // Counts the number of rounds
     static var existingCharacterNames = [String]() // Stores the character names that were already created by other players and can't be used again
     enum JobType {
         case mercenary, arbalester, pyromaniac, magus
     }
     
+    // MARK: Init
     // A method that will be called each time a new game begins
-    func initiateNewGame() {
+    init() {
         numberOfRounds = 0 // Resets the number of rounds to 0
         print("\n\nWelcome to Petroyes.") // Prints a greeting for the players
         for i in 1...2 {
@@ -34,9 +33,10 @@ class Game {
         print("\n\(players[0].name) and \(players[1].name) will have a fight today!") // Prints a catch phrase to arouse the players
         describeJobs() // Calls the so called method
         createTeams() // Calls the so called method
-        battle()
+        fight()
     }
     
+    // MARK: Init in details
     // A method to create the players' teams of characters
     func createTeams() {
         for player in players { // A for-in that goes through the 'players' array
@@ -87,12 +87,14 @@ class Game {
     // A method to describe the available character types
     func describeJobs() {
         print("\nHere's a list of the jobs available and their related skills:") // A brief description for the player
+        let playableCharacters = [Mercenary(name: nil), Arbalester(name: nil), Pyromaniac(name: nil), Magus(name: nil)] // An array containing the character's types
         for character in playableCharacters { // A for-in that goes through the 'playableCharacters' array
             character.describe() // Calls the so-called method for each character
         }
     }
     
-    func battle() {
+    // MARK: Fight
+    func fight() {
         
     }
 }

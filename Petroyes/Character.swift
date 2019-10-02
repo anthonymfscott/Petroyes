@@ -39,7 +39,7 @@ class Character {
     }
 }
 
-// CHARACTER'S SUBCLASSES:
+// MARK: Subclasses
 class Mercenary: Character {
     override init(name: String?) {
         super.init(name: name)
