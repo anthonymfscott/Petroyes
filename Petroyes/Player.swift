@@ -9,13 +9,13 @@
 import Foundation
 
 class Player {
-    var title: String
+    var number: Int
     var name = ""
     var team = [Character]()
     
-    init(title: String) {
-        self.title = title
-        print("\nChoose a name for \(title):")
+    init(number: Int) {
+        self.number = number
+        print("\nChoose a name for Player \(number):")
         if let name = readLine() {
            self.name = name
         }
