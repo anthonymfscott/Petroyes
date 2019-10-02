@@ -21,7 +21,7 @@ class Game {
         case mercenary, arbalester, pyromaniac, magus
     }
     
-    // MARK: Init
+    // MARK: Initialisation
     // A method that will be called each time a new game begins
     init() {
         numberOfRounds = 0 // Resets the number of rounds to 0
@@ -36,7 +36,7 @@ class Game {
         fight()
     }
     
-    // MARK: Init in details
+    // MARK: Initialisation functions
     // A method to create the players' teams of characters
     func createTeams() {
         for player in players { // A for-in that goes through the 'players' array
@@ -87,14 +87,21 @@ class Game {
     // A method to describe the available character types
     func describeJobs() {
         print("\nHere's a list of the jobs available and their related skills:") // A brief description for the player
-        let playableCharacters = [Mercenary(name: nil), Arbalester(name: nil), Pyromaniac(name: nil), Magus(name: nil)] // An array containing the character's types
+        let playableCharacters = [Mercenary(name: nil), Arbalester(name: nil), Pyromaniac(name: nil), Magus(name: nil)] // An array containing all available characters without names
         for character in playableCharacters { // A for-in that goes through the 'playableCharacters' array
             character.describe() // Calls the so-called method for each character
         }
     }
     
-    // MARK: Fight
+    // MARK: Fight phase
     func fight() {
-        
+        for player in players {
+            print("\n\(player.name.uppercased())'S TURN:"
+                + "\nSelect one of your characters:"
+                + "\n(1 = \(player.team[0].name!), 2 = \(player.team[1].name!), 3 = \(player.team[2].name!))")
+            
+            print("Select a target for the action:"
+                + "\n(1 = \(players[0].team[0].name!), 2 = \(players[0].team[1].name!), 3 = \(players[0].team[2].name!), 4 = \(players[1].team[0].name!), 5 = \(players[1].team[1].name!), 6 = \(players[1].team[2].name!))")
+        }
     }
 }
