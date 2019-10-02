@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		04B0C88D2344F39A00BF22A7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C88C2344F39A00BF22A7 /* main.swift */; };
+		04B0C8A72344F88B00BF22A7 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C8A62344F88B00BF22A7 /* Game.swift */; };
+		04B0C8A92344F89C00BF22A7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C8A82344F89C00BF22A7 /* Player.swift */; };
+		04B0C8AB2344F8AA00BF22A7 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C8AA2344F8AA00BF22A7 /* Character.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,9 @@
 /* Begin PBXFileReference section */
 		04B0C8892344F39A00BF22A7 /* Petroyes */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Petroyes; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B0C88C2344F39A00BF22A7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		04B0C8A62344F88B00BF22A7 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		04B0C8A82344F89C00BF22A7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		04B0C8AA2344F8AA00BF22A7 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,9 @@
 			isa = PBXGroup;
 			children = (
 				04B0C88C2344F39A00BF22A7 /* main.swift */,
+				04B0C8A62344F88B00BF22A7 /* Game.swift */,
+				04B0C8A82344F89C00BF22A7 /* Player.swift */,
+				04B0C8AA2344F8AA00BF22A7 /* Character.swift */,
 			);
 			path = Petroyes;
 			sourceTree = "<group>";
@@ -121,6 +130,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04B0C88D2344F39A00BF22A7 /* main.swift in Sources */,
+				04B0C8A92344F89C00BF22A7 /* Player.swift in Sources */,
+				04B0C8A72344F88B00BF22A7 /* Game.swift in Sources */,
+				04B0C8AB2344F8AA00BF22A7 /* Character.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,4 +8,4 @@
 
 import Foundation
 
-
+Game.initiateNewGame()
