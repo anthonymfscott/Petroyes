@@ -16,7 +16,7 @@ class Game {
     
     // A series of properties that will be useful to the gameplay
     var players: [Player] = [] // An array containing the players
-    let playableCharacters = [Mercenary(), Arbalester(), Pyromaniac(), Magus()] // An array containing the character's types
+    let playableCharacters = [Mercenary(name: nil), Arbalester(name: nil), Pyromaniac(name: nil), Magus(name: nil)] // An array containing the character's types
     var numberOfRounds = 0 // Counts the number of rounds
     static var existingCharacterNames = [String]() // Stores the character names that were already created by other players and can't be used again
     enum JobType {
@@ -28,8 +28,8 @@ class Game {
         numberOfRounds = 0 // Resets the number of rounds to 0
         print("\n\nWelcome to Petroyes.") // Prints a greeting for the players
         for i in 1...2 {
-            let player = Player(number: Int(i))
-            players.append(player)
+            let newPlayer = Player(number: Int(i))
+            players.append(newPlayer)
         }
         print("\n\(players[0].name) and \(players[1].name) will have a fight today!") // Prints a catch phrase to arouse the players
         describeJobs() // Calls the so called method
@@ -47,13 +47,13 @@ class Game {
                 if let choice = readLine() {
                     switch choice {
                     case "1":
-                        player.team.append(createCharacter(job: .mercenary))
+                        player.team.append(createCharacter(job: .mercenary)!)
                     case "2":
-                        player.team.append(createCharacter(job: .arbalester))
+                        player.team.append(createCharacter(job: .arbalester)!)
                     case "3":
-                        player.team.append(createCharacter(job: .pyromaniac))
+                        player.team.append(createCharacter(job: .pyromaniac)!)
                     case "4":
-                        player.team.append(createCharacter(job: .magus))
+                        player.team.append(createCharacter(job: .magus)!)
                     default:
                         print("Invalid input. Please try again.")
                     }
@@ -67,24 +67,20 @@ class Game {
         print("\nNow let the fight begin!")
     }
     
-    func createCharacter(job: JobType) -> Character {
+    func createCharacter(job: JobType) -> Character? {
+        print("Choose a name for your \(job):")
+        guard let newName = readLine() else {
+            return nil
+        }
         switch job {
         case .mercenary:
-            let newMercenary = Mercenary()
-            newMercenary.giveName()
-            return newMercenary
+            return Mercenary(name: newName)
         case .arbalester:
-            let newArbalester = Arbalester()
-            newArbalester.giveName()
-            return newArbalester
+            return Arbalester(name: newName)
         case .pyromaniac:
-            let newPyromaniac = Pyromaniac()
-            newPyromaniac.giveName()
-            return newPyromaniac
+            return Pyromaniac(name: newName)
         case .magus:
-            let newMagus = Magus()
-            newMagus.giveName()
-            return newMagus
+            return Magus(name: newName)
         }
     }
     
