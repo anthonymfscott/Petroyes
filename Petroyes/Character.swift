@@ -12,7 +12,8 @@ class Character {
     var name: String?
     var job = ""
     var hp = 0
-    var strength = 0
+    var weapon = ""
+    var strength = [String: Int]()
     var description = ""
     
     init(name: String?) {
@@ -26,9 +27,10 @@ class Character {
         if let name = name {
             print("\n\(name)", terminator: "")
         }
-        print("\n\(job.uppercased())"
+        print("\n--- \(job) ---"
             + "\nhealth points: \(hp)"
-            + "\nstrength: \(strength)")
+            + "\nweapon: \(weapon)"
+            + "\nstrength: \(strength["usual"]!)")
         if Game.existingCharacterNames.count == 0 {
             print(description)
         }
@@ -45,7 +47,8 @@ class Mercenary: Character {
         super.init(name: name)
         job = "mercenary"
         hp = 100
-        strength = 10
+        weapon = "sword"
+        strength = ["diminished": 5, "usual": 10, "increased": 20]
         description = "Mercenaries are very tough, and best at close-range fighting using all types of swords."
     }
 }
@@ -55,7 +58,8 @@ class Arbalester: Character {
         super.init(name: name)
         job = "arbalester"
         hp = 90
-        strength = 12
+        weapon = "crossbow"
+        strength = ["diminished": 5, "usual": 12, "increased": 20]
         description = "Arbalesters use their crossbows to shoot powerful bolts from a distance."
     }
 }
@@ -65,7 +69,8 @@ class Pyromaniac: Character {
         super.init(name: name)
         job = "pyromaniac"
         hp = 80
-        strength = 15
+        weapon = "blowtorch"
+        strength = ["diminished": 5, "usual": 15, "increased": 20]
         description = "Pyromaniacs just love fire... maybe a little bit too much sometimes."
     }
 }
@@ -75,7 +80,8 @@ class Magus: Character {
         super.init(name: name)
         job = "magus"
         hp = 70
-        strength = 5
+        weapon = "staff"
+        strength = ["diminished": 5, "usual": 10, "increased": 20]
         description = "Magi aren't very good at fighting, but excel at healing wounds using the power of their staffs."
     }
     
