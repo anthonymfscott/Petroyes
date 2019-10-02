@@ -22,7 +22,7 @@ class Player {
     }
     
     func describeTeam() {
-        print("\nTEAM \(name.uppercased()):", terminator: "")
+        print("\n\(name.uppercased())'S TEAM:", terminator: "")
         for character in team {
             character.describe()
         }
