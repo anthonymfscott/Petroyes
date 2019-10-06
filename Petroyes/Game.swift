@@ -2,7 +2,7 @@
 //  Game.swift
 //  Petroyes
 //
-//  Created by Tony Scott enfant Depaepe on 02/10/2019.
+//  Created by anthonymfscott on 02/10/2019.
 //  Copyright © 2019 anthonymfscott. All rights reserved.
 //
 
@@ -38,7 +38,6 @@ class Game {
         fight()
     }
     
-    // MARK: Initialisation functions
     // A method to create the players' teams of characters
     func createTeams() {
         for player in players { // A for-in that goes through the 'players' array
@@ -94,89 +93,27 @@ class Game {
         }
     }
     
-    // MARK: Fight phase
+    // MARK: Fight
     func fight() {
         print("\nNow let the fight begin!")
         for i in 0...players.count-1 {
             let activePlayer = players[i]
             print("\n\(activePlayer.name.uppercased())'S TURN:")
-            if let selectedCharacter = selectActioningCharacter(activePlayer: activePlayer) {
-               if let targetCharacter = selectTargetCharacter(activePlayer: activePlayer, selectedCharacter: selectedCharacter) {
-                selectedCharacter.action(targetCharacter: targetCharacter)
-               }
+            if let ally = activePlayer.selectAlly() {
+                if ally.job == "magus" {
+                    if let allyTarget = activePlayer.selectAlly() {
+                        ally.action(targetCharacter: allyTarget)
+                    }
+                } else {
+                    if let enemy = activePlayer.selectEnemy(amongst: players) {
+                        ally.action(targetCharacter: enemy)
+                    }
+                }
             }
         }
         print("\nCurrent statistics:")
         for player in players {
-            player.describeTeam()
-        }
-    }
-    
-    func selectActioningCharacter(activePlayer: Player) -> Character? {
-        var characterSelectionMessage = ""
-        for i in 0...activePlayer.team.count - 1 {
-            characterSelectionMessage += "\(i+1) = \(activePlayer.team[i].name!)."
-        }
-        print("""
-            Select one of your characters for the next action:
-            (\(characterSelectionMessage))
-            """)
-        guard let choice = readLine() else {
-            return nil
-        }
-        if Int(choice)! > 0 && Int(choice)! <= activePlayer.team.count {
-            return activePlayer.team[Int(choice)! - 1]
-        } else {
-            print("Invalid input. Next player's turn.")
-            return nil
-        }
-    }
-    
-    func selectTargetCharacter(activePlayer: Player, selectedCharacter: Character) -> Character? {
-        if selectedCharacter.job == "magus" {
-            var characterSelectionMessage = ""
-            for i in 0...activePlayer.team.count - 1 {
-                characterSelectionMessage += "\(i+1) = \(activePlayer.team[i].name!)."
-            }
-            print("""
-                Select an ally for \(selectedCharacter.name!)'s cure:
-                (\(characterSelectionMessage))
-                """)
-            guard let choice = readLine() else {
-                return nil
-            }
-            if Int(choice)! > 0 && Int(choice)! <= activePlayer.team.count {
-                return activePlayer.team[Int(choice)! - 1]
-            } else {
-                print("Invalid input. Next player's turn.")
-                return nil
-            }
-        } else {
-            var enemies: [Character] = []
-            for i in 0...players.count - 1 {
-                if players[i] !== activePlayer {
-                    for j in 0...players[i].team.count - 1 {
-                        enemies.append(players[i].team[j])
-                    }
-                }
-            }
-            var targetSelectionMessage = ""
-            for i in 0...enemies.count - 1 {
-                targetSelectionMessage += "\(i+1) = \(enemies[i].name!)."
-            }
-            print("""
-                Select an enemy for \(selectedCharacter.name!)'s attack:
-                (\(targetSelectionMessage))
-                """)
-            guard let choice = readLine() else {
-                return nil
-            }
-            if Int(choice)! > 0 && Int(choice)! <= enemies.count {
-                return enemies[Int(choice)! - 1]
-            } else {
-                print("Invalid input. Next player's turn.")
-                return nil
-            }
+            player.showStats()
         }
     }
 }

@@ -2,7 +2,7 @@
 //  Character.swift
 //  Petroyes
 //
-//  Created by Tony Scott enfant Depaepe on 02/10/2019.
+//  Created by anthonymfscott on 02/10/2019.
 //  Copyright © 2019 anthonymfscott. All rights reserved.
 //
 
@@ -15,6 +15,7 @@ class Character {
     var weapon = ""
     var strength = [String: Int]()
     var description = ""
+    var isDead = false
     
     init(name: String?) {
         if let name = name {
@@ -36,10 +37,19 @@ class Character {
         }
     }
     
+    func stats() {
+        print("\(name!): \(hp) hp")
+    }
+    
     func action(targetCharacter: Character) {
         print("\(name!) hits \(targetCharacter.name!)!")
         targetCharacter.hp -= strength["usual"]!
         print("\(targetCharacter.name!) has lost \(strength["usual"]!) health points!")
+        if targetCharacter.hp <= 0 {
+            targetCharacter.hp = 0
+            targetCharacter.isDead = true
+            print("\(targetCharacter.name!) is dead!")
+        }
     }
 }
 
@@ -50,7 +60,7 @@ class Mercenary: Character {
         job = "mercenary"
         hp = 100
         weapon = "sword"
-        strength = ["diminished": 5, "usual": 10, "increased": 20]
+        strength = ["diminished": 5, "usual": 100, "increased": 20]
         description = "Mercenaries are very tough, and best at close-range fighting using all types of swords."
     }
 }
@@ -61,7 +71,7 @@ class Arbalester: Character {
         job = "arbalester"
         hp = 90
         weapon = "crossbow"
-        strength = ["diminished": 5, "usual": 12, "increased": 20]
+        strength = ["diminished": 5, "usual": 120, "increased": 20]
         description = "Arbalesters use their crossbows to shoot powerful bolts from a distance."
     }
 }
@@ -72,7 +82,7 @@ class Pyromaniac: Character {
         job = "pyromaniac"
         hp = 80
         weapon = "blowtorch"
-        strength = ["diminished": 5, "usual": 15, "increased": 20]
+        strength = ["diminished": 5, "usual": 150, "increased": 20]
         description = "Pyromaniacs just love fire... maybe a little bit too much sometimes."
     }
 }
@@ -83,7 +93,7 @@ class Magus: Character {
         job = "magus"
         hp = 70
         weapon = "staff"
-        strength = ["diminished": 5, "usual": 10, "increased": 20]
+        strength = ["diminished": 5, "usual": 100, "increased": 20]
         description = "Magi aren't very good at fighting, but excel at healing wounds using the power of their staffs."
     }
     
