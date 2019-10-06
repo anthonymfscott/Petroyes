@@ -11,7 +11,7 @@ import Foundation
 class Player {
     var number: Int
     var name = ""
-    var team = [Character]()
+    var team: [Character] = []
     
     init(number: Int) {
         self.number = number

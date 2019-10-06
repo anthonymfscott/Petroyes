@@ -36,8 +36,10 @@ class Character {
         }
     }
     
-    func action() {
-        
+    func action(targetCharacter: Character) {
+        print("\(name!) hits \(targetCharacter.name!)!")
+        targetCharacter.hp -= strength["usual"]!
+        print("\(targetCharacter.name!) has lost \(strength["usual"]!) health points!")
     }
 }
 
@@ -85,7 +87,9 @@ class Magus: Character {
         description = "Magi aren't very good at fighting, but excel at healing wounds using the power of their staffs."
     }
     
-    override func action() {
-        
+    override func action(targetCharacter: Character) {
+        print("\(name!) cures \(targetCharacter.name!)!")
+        targetCharacter.hp += strength["usual"]!
+        print("\(targetCharacter.name!) has recovered \(strength["usual"]!) health points!")
     }
 }

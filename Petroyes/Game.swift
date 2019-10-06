@@ -12,21 +12,23 @@ class Game {
     // MARK: Properties
     // A series of properties that will be useful to the gameplay
     enum State {
-           case ongoing, over
-       }
+        case ongoing, over
+    }
+    var numberOfPlayers: Int
     var players: [Player] = [] // An array containing the players
-    var numberOfRounds = 0 // Counts the number of rounds
-    static var existingCharacterNames = [String]() // Stores the character names that were already created by other players and can't be used again
+    var numberOfRounds: Int // Counts the number of rounds
+    static var existingCharacterNames: [String] = [] // Stores the character names that were already created by other players and can't be used again
     enum JobType {
         case mercenary, arbalester, pyromaniac, magus
     }
     
     // MARK: Initialisation
     // A method that will be called each time a new game begins
-    init() {
+    init(numberOfPlayers: Int) {
+        self.numberOfPlayers = numberOfPlayers
         numberOfRounds = 0 // Resets the number of rounds to 0
         print("\n\nWelcome to Petroyes.") // Prints a greeting for the players
-        for i in 1...2 {
+        for i in 1...numberOfPlayers {
             let newPlayer = Player(number: Int(i))
             players.append(newPlayer)
         }
@@ -60,11 +62,10 @@ class Game {
                 }
             }
         }
-        print("\nHere are the finalized teams:")
+        print("\nHere are the finalised teams:")
         for player in players {
             player.describeTeam()
         }
-        print("\nNow let the fight begin!")
     }
     
     func createCharacter(job: JobType) -> Character? {
@@ -95,13 +96,87 @@ class Game {
     
     // MARK: Fight phase
     func fight() {
+        print("\nNow let the fight begin!")
+        for i in 0...players.count-1 {
+            let activePlayer = players[i]
+            print("\n\(activePlayer.name.uppercased())'S TURN:")
+            if let selectedCharacter = selectActioningCharacter(activePlayer: activePlayer) {
+               if let targetCharacter = selectTargetCharacter(activePlayer: activePlayer, selectedCharacter: selectedCharacter) {
+                selectedCharacter.action(targetCharacter: targetCharacter)
+               }
+            }
+        }
+        print("\nCurrent statistics:")
         for player in players {
-            print("\n\(player.name.uppercased())'S TURN:"
-                + "\nSelect one of your characters:"
-                + "\n(1 = \(player.team[0].name!), 2 = \(player.team[1].name!), 3 = \(player.team[2].name!))")
-            
-            print("Select a target for the action:"
-                + "\n(1 = \(players[0].team[0].name!), 2 = \(players[0].team[1].name!), 3 = \(players[0].team[2].name!), 4 = \(players[1].team[0].name!), 5 = \(players[1].team[1].name!), 6 = \(players[1].team[2].name!))")
+            player.describeTeam()
+        }
+    }
+    
+    func selectActioningCharacter(activePlayer: Player) -> Character? {
+        var characterSelectionMessage = ""
+        for i in 0...activePlayer.team.count - 1 {
+            characterSelectionMessage += "\(i+1) = \(activePlayer.team[i].name!)."
+        }
+        print("""
+            Select one of your characters for the next action:
+            (\(characterSelectionMessage))
+            """)
+        guard let choice = readLine() else {
+            return nil
+        }
+        if Int(choice)! > 0 && Int(choice)! <= activePlayer.team.count {
+            return activePlayer.team[Int(choice)! - 1]
+        } else {
+            print("Invalid input. Next player's turn.")
+            return nil
+        }
+    }
+    
+    func selectTargetCharacter(activePlayer: Player, selectedCharacter: Character) -> Character? {
+        if selectedCharacter.job == "magus" {
+            var characterSelectionMessage = ""
+            for i in 0...activePlayer.team.count - 1 {
+                characterSelectionMessage += "\(i+1) = \(activePlayer.team[i].name!)."
+            }
+            print("""
+                Select an ally for \(selectedCharacter.name!)'s cure:
+                (\(characterSelectionMessage))
+                """)
+            guard let choice = readLine() else {
+                return nil
+            }
+            if Int(choice)! > 0 && Int(choice)! <= activePlayer.team.count {
+                return activePlayer.team[Int(choice)! - 1]
+            } else {
+                print("Invalid input. Next player's turn.")
+                return nil
+            }
+        } else {
+            var enemies: [Character] = []
+            for i in 0...players.count - 1 {
+                if players[i] !== activePlayer {
+                    for j in 0...players[i].team.count - 1 {
+                        enemies.append(players[i].team[j])
+                    }
+                }
+            }
+            var targetSelectionMessage = ""
+            for i in 0...enemies.count - 1 {
+                targetSelectionMessage += "\(i+1) = \(enemies[i].name!)."
+            }
+            print("""
+                Select an enemy for \(selectedCharacter.name!)'s attack:
+                (\(targetSelectionMessage))
+                """)
+            guard let choice = readLine() else {
+                return nil
+            }
+            if Int(choice)! > 0 && Int(choice)! <= enemies.count {
+                return enemies[Int(choice)! - 1]
+            } else {
+                print("Invalid input. Next player's turn.")
+                return nil
+            }
         }
     }
 }
