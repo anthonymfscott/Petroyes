@@ -96,24 +96,44 @@ class Game {
     // MARK: Fight
     func fight() {
         print("\nNow let the fight begin!")
-        for i in 0...players.count-1 {
-            let activePlayer = players[i]
-            print("\n\(activePlayer.name.uppercased())'S TURN:")
-            if let ally = activePlayer.selectAlly() {
-                if ally.job == "magus" {
-                    if let allyTarget = activePlayer.selectAlly() {
-                        ally.action(targetCharacter: allyTarget)
-                    }
+        var remainingPlayers = players
+        while numberOfPlayers > 1 {
+            for i in 0...remainingPlayers.count-1 {
+                let activePlayer = remainingPlayers[i]
+                if activePlayer.team[0].isDead && activePlayer.team[1].isDead && activePlayer.team[2].isDead {
+                    print("\n\(activePlayer.name.uppercased())'S TEAM IS DEAD.")
                 } else {
-                    if let enemy = activePlayer.selectEnemy(amongst: players) {
-                        ally.action(targetCharacter: enemy)
+                    print("\n\(activePlayer.name.uppercased())'S TURN:")
+                    if let ally = activePlayer.selectAlly() {
+                        if ally.job == "magus" {
+                            if let allyTarget = activePlayer.selectAlly() {
+                                ally.action(targetCharacter: allyTarget)
+                            }
+                        } else {
+                            if let enemy = activePlayer.selectEnemy(amongst: remainingPlayers) {
+                                ally.action(targetCharacter: enemy)
+                            }
+                        }
                     }
                 }
             }
+            print("\nCurrent statistics:")
+            for player in players {
+                player.showStats()
+            }
+            var numberOfDeadTeams = 0
+            var deadTeamIndices: [Int] = []
+            for i in 0...remainingPlayers.count-1 {
+                if remainingPlayers[i].team[0].isDead && remainingPlayers[i].team[1].isDead && remainingPlayers[i].team[2].isDead {
+                    numberOfDeadTeams += 1
+                    deadTeamIndices.append(i)
+                }
+            }
+            numberOfPlayers -= numberOfDeadTeams
+            for i in deadTeamIndices {
+                remainingPlayers.remove(at: i)
+            }
         }
-        print("\nCurrent statistics:")
-        for player in players {
-            player.showStats()
-        }
+        print("Game over!")
     }
 }

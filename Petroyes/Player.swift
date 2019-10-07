@@ -29,7 +29,7 @@ class Player {
     }
     
     func showStats() {
-        print("\n\(name.uppercased())'S TEAM:")
+        print("\(name.uppercased())'S TEAM:")
         for character in team {
             character.stats()
         }
