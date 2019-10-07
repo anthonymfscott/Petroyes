@@ -110,7 +110,7 @@ class Game {
                                 ally.action(targetCharacter: allyTarget)
                             }
                         } else {
-                            if let enemy = activePlayer.selectEnemy(amongst: remainingPlayers) {
+                            if let enemy = activePlayer.selectEnemy(amongst: remainingPlayers){
                                 ally.action(targetCharacter: enemy)
                             }
                         }
@@ -134,6 +134,7 @@ class Game {
                 remainingPlayers.remove(at: i)
             }
         }
-        print("Game over!")
+        print("\nGAME OVER!"
+            + "\n\(remainingPlayers[0].name) wins the battle!")
     }
 }
