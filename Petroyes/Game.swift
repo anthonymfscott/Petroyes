@@ -104,6 +104,10 @@ class Game {
                     print("\n\(activePlayer.name.uppercased())'S TEAM IS DEAD.")
                 } else {
                     print("\n\(activePlayer.name.uppercased())'S TURN:")
+                    print(activePlayer.team[0].swopsWeapon())
+       //             if chestAppears() {
+       //                 print(activePlayer.chestDecision())
+       //             }
                     if let ally = activePlayer.selectAlly() {
                         if ally.job == "magus" {
                             if let allyTarget = activePlayer.selectAlly() {
@@ -116,6 +120,7 @@ class Game {
                         }
                     }
                 }
+                numberOfRounds += 1
             }
             print("\nCurrent statistics:")
             for player in players {
@@ -135,6 +140,10 @@ class Game {
             }
         }
         print("\nGAME OVER!"
-            + "\n\(remainingPlayers[0].name) wins the battle!")
+            + "\n\(remainingPlayers[0].name) wins the battle in \(numberOfRounds) rounds!")
+    }
+    
+    func chestAppears() {
+        print("A chest appears in front of ")
     }
 }
