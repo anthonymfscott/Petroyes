@@ -8,4 +8,4 @@
 
 import Foundation
 
-let game = Game(numberOfPlayers: 4)
+let game = Game(numberOfPlayers: 3)

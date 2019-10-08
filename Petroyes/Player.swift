@@ -22,14 +22,14 @@ class Player {
     }
     
     func describeTeam() {
-        print("\n\(name.uppercased())'S TEAM:", terminator: "")
+        print("\n-> \(name.uppercased())'S TEAM:")
         for character in team {
             character.describe()
         }
     }
     
     func showStats() {
-        print("\(name.uppercased())'S TEAM:")
+        print("-> \(name.uppercased())'S TEAM:")
         for character in team {
             character.stats()
         }
@@ -44,11 +44,11 @@ class Player {
         }
         var listOfRemainingAllies = ""
         for i in 0...allies.count - 1 {
-            listOfRemainingAllies += "\(i+1) = \(allies[i].name!)."
+            listOfRemainingAllies += "\(i+1) = \(allies[i].name!) (\(allies[i].currentWeapon))  "
         }
         print("""
             Select one of your allies for the next action:
-            (\(listOfRemainingAllies))
+            \(listOfRemainingAllies)
             """)
         guard let choice = readLine() else {
             return nil
@@ -74,11 +74,11 @@ class Player {
         }
         var listOfRemainingEnemies = ""
         for i in 0...enemies.count - 1 {
-            listOfRemainingEnemies += "\(i+1) = \(enemies[i].name!)."
+            listOfRemainingEnemies += "\(i+1) = \(enemies[i].name!)  "
         }
         print("""
             Select an enemy for the next action:
-            (\(listOfRemainingEnemies))
+            \(listOfRemainingEnemies)
             """)
         guard let choice = readLine() else {
             return nil

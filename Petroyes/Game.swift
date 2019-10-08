@@ -32,7 +32,6 @@ class Game {
             let newPlayer = Player(number: Int(i))
             players.append(newPlayer)
         }
-        print("\n\(players[0].name) and \(players[1].name) will have a fight today!") // Prints a catch phrase to arouse the players
         describeJobs() // Calls the so called method
         createTeams() // Calls the so called method
         fight()
@@ -104,10 +103,23 @@ class Game {
                     print("\n\(activePlayer.name.uppercased())'S TEAM IS DEAD.")
                 } else {
                     print("\n\(activePlayer.name.uppercased())'S TURN:")
-                    print(activePlayer.team[0].swopsWeapon())
-       //             if chestAppears() {
-       //                 print(activePlayer.chestDecision())
-       //             }
+                    if chestAppears() {
+                        let randomIndex = Int.random(in: 0...2)
+                        if !activePlayer.team[randomIndex].isDead {
+                            print("A chest magically appears in front of \(activePlayer.team[randomIndex].name!)!"
+                                + "\nWould you like to open it and swap \(activePlayer.team[randomIndex].name!)'s \(activePlayer.team[randomIndex].currentWeapon) for the weapon that's hidden inside? (Y/N)")
+                            if let answer = readLine() {
+                                switch answer {
+                                case "Y":
+                                    print(activePlayer.team[randomIndex].swapsWeapon())
+                                case "N":
+                                    print("\(activePlayer.team[randomIndex].name!) doesn't open the chest. The battle continues!")
+                                default:
+                                    print("Invalid input. The battle continues...")
+                                }
+                            }
+                        }
+                    }
                     if let ally = activePlayer.selectAlly() {
                         if ally.job == "magus" {
                             if let allyTarget = activePlayer.selectAlly() {
@@ -122,7 +134,7 @@ class Game {
                 }
                 numberOfRounds += 1
             }
-            print("\nCurrent statistics:")
+            print("\nEnd of round \(numberOfRounds):")
             for player in players {
                 player.showStats()
             }
@@ -143,7 +155,12 @@ class Game {
             + "\n\(remainingPlayers[0].name) wins the battle in \(numberOfRounds) rounds!")
     }
     
-    func chestAppears() {
-        print("A chest appears in front of ")
+    func chestAppears() -> Bool {
+        let randomNumber = Int.random(in: 0...2)
+        if randomNumber == 0 {
+            return true
+        } else {
+            return false
+        }
     }
 }

@@ -28,12 +28,12 @@ class Character {
     
     func describe() {
         if let name = name {
-            print("\n\(name)", terminator: "")
+            print("\(name.uppercased())", terminator: "")
         }
         print("\n--- \(job) ---"
             + "\nhealth points: \(hp)"
-            + "\nweapon: \(currentWeapon)"
-            + "\nstrength: \(currentStrength)")
+            + "\ninitial weapon: \(currentWeapon)"
+            + "\ninitial strength: \(currentStrength)")
         if Game.existingCharacterNames.count == 0 {
             print(description)
         }
@@ -54,10 +54,24 @@ class Character {
         }
     }
     
-    func swopsWeapon() -> String {
-        currentWeapon = availableWeapons["diminished"]!
-        currentStrength = weaponsStrength["diminished"]!
-        return "Too bad! \(name!) opens the chest and gets a weaker weapon: \(currentWeapon), strength: \(currentStrength)!"
+    func swapsWeapon() -> String {
+        let randomNumber = Int.random(in: 0...2)
+        switch randomNumber {
+        case 0:
+            currentWeapon = availableWeapons["diminished"]!
+            currentStrength = weaponsStrength["diminished"]!
+            return "Too bad! \(name!) opens the chest and gets a weak weapon: \(currentWeapon.uppercased()) (strength: \(currentStrength))."
+        case 1:
+            currentWeapon = availableWeapons["usual"]!
+            currentStrength = weaponsStrength["usual"]!
+            return "\(name!) opens the chest and gets a standard weapon: \(currentWeapon.uppercased()) (strength: \(currentStrength))."
+        case 2:
+            currentWeapon = availableWeapons["increased"]!
+            currentStrength = weaponsStrength["increased"]!
+            return "How lucky! \(name!) opens the chest and gets a strong weapon: \(currentWeapon.uppercased()) (strength: \(currentStrength))."
+        default:
+            return "Nothing happens."
+        }
     }
 }
 
@@ -69,7 +83,7 @@ class Mercenary: Character {
         hp = 100
         availableWeapons = ["diminished": "knife", "usual": "sword", "increased": "axe"]
         currentWeapon = availableWeapons["usual"]!
-        weaponsStrength = ["diminished": 5, "usual": 10, "increased": 20]
+        weaponsStrength = ["diminished": 10, "usual": 20, "increased": 40]
         currentStrength = weaponsStrength["usual"]!
         description = "Mercenaries are very tough, and best at close-range fighting using all types of swords."
     }
@@ -82,7 +96,7 @@ class Arbalester: Character {
         hp = 90
         availableWeapons = ["diminished": "darts", "usual": "crossbow", "increased": "superarbalest"]
         currentWeapon = availableWeapons["usual"]!
-        weaponsStrength = ["diminished": 5, "usual": 12, "increased": 20]
+        weaponsStrength = ["diminished": 15, "usual": 30, "increased": 60]
         currentStrength = weaponsStrength["usual"]!
         description = "Arbalesters use their crossbows to shoot powerful bolts from a distance."
     }
@@ -95,7 +109,7 @@ class Pyromaniac: Character {
         hp = 80
         availableWeapons = ["diminished": "matchbox", "usual": "blowtorch", "increased": "flamethrower"]
         currentWeapon = availableWeapons["usual"]!
-        weaponsStrength = ["diminished": 5, "usual": 15, "increased": 20]
+        weaponsStrength = ["diminished": 20, "usual": 40, "increased": 80]
         currentStrength = weaponsStrength["usual"]!
         description = "Pyromaniacs just love fire... maybe a little bit too much sometimes."
     }
