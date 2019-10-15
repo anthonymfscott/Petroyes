@@ -9,48 +9,47 @@
 import Foundation
 
 class Character {
-    var name: String?
+    var name = ""
     var job = ""
     var hp = 0
-    var availableWeapons: [String: String] = [:]
-    var currentWeapon = ""
-    var weaponsStrength: [String: Int] = [:]
-    var currentStrength = 0
+    var availableWeapons: [Weapon] = []
+    var weapon = Weapon(name: "", actionPoints: 0)
     var description = ""
     var isDead = false
     
-    init(name: String?) {
-        if let name = name {
+    init(name: String) {
+        if !name.isEmpty {
             self.name = name
             Game.existingCharacterNames.append(name)
         }
     }
     
-    func describe() {
-        if let name = name {
-            print("\(name.uppercased())", terminator: "")
-        }
-        print("\n--- \(job) ---"
-            + "\nhealth points: \(hp)"
-            + "\ninitial weapon: \(currentWeapon)"
-            + "\ninitial strength: \(currentStrength)")
-        if Game.existingCharacterNames.count == 0 {
-            print(description)
-        }
+    func describeJob() {
+        print("""
+            - \(job.uppercased())
+                \(description)
+                health points: \(hp)
+                weapon: \(weapon.name)
+                action points: \(weapon.actionPoints)
+            """)
+    }
+    
+    func shortlyDescribe() {
+        print("     \(name), \(job)")
     }
     
     func stats() {
-        print("\(name!): \(hp) hp")
+        print("     \(name) (\(weapon.name)): \(hp) hp")
     }
     
     func action(targetCharacter: Character) {
-        print("\(name!) hits \(targetCharacter.name!)!")
-        targetCharacter.hp -= currentStrength
-        print("\(targetCharacter.name!) loses \(currentStrength) health points!")
+        print("\(name) hits \(targetCharacter.name)")
+        targetCharacter.hp -= weapon.actionPoints
+        print("\(targetCharacter.name) loses \(weapon.actionPoints) health points!")
         if targetCharacter.hp <= 0 {
             targetCharacter.hp = 0
             targetCharacter.isDead = true
-            print("\(targetCharacter.name!) is dead!")
+            print("\(targetCharacter.name) is dead!")
         }
     }
     
@@ -58,17 +57,14 @@ class Character {
         let randomNumber = Int.random(in: 0...2)
         switch randomNumber {
         case 0:
-            currentWeapon = availableWeapons["diminished"]!
-            currentStrength = weaponsStrength["diminished"]!
-            return "Too bad! \(name!) opens the chest and gets a weak weapon: \(currentWeapon.uppercased()) (strength: \(currentStrength))."
+            weapon = availableWeapons[0]
+            return "\(name) opens the chest and gets a standard weapon: \(weapon.name.uppercased()) (action points: \(weapon.actionPoints))."
         case 1:
-            currentWeapon = availableWeapons["usual"]!
-            currentStrength = weaponsStrength["usual"]!
-            return "\(name!) opens the chest and gets a standard weapon: \(currentWeapon.uppercased()) (strength: \(currentStrength))."
+            weapon = availableWeapons[1]
+            return "Too bad! \(name) opens the chest and gets a weak weapon: \(weapon.name.uppercased()) (action points: \(weapon.actionPoints))."
         case 2:
-            currentWeapon = availableWeapons["increased"]!
-            currentStrength = weaponsStrength["increased"]!
-            return "How lucky! \(name!) opens the chest and gets a strong weapon: \(currentWeapon.uppercased()) (strength: \(currentStrength))."
+            weapon = availableWeapons[2]
+            return "How lucky! \(name) opens the chest and gets a strong weapon: \(weapon.name.uppercased()) (action points: \(weapon.actionPoints))."
         default:
             return "Nothing happens."
         }
@@ -77,59 +73,51 @@ class Character {
 
 // MARK: Subclasses
 class Mercenary: Character {
-    override init(name: String?) {
+    override init(name: String = "") {
         super.init(name: name)
         job = "mercenary"
         hp = 100
-        availableWeapons = ["diminished": "knife", "usual": "sword", "increased": "axe"]
-        currentWeapon = availableWeapons["usual"]!
-        weaponsStrength = ["diminished": 10, "usual": 20, "increased": 40]
-        currentStrength = weaponsStrength["usual"]!
-        description = "Mercenaries are very tough, and best at close-range fighting using all types of swords."
+        availableWeapons = [sword, dagger, axe]
+        weapon = availableWeapons[0]
+        description = "Mercenaries are very tough, experts at close-range fighting using all types of swords."
     }
 }
 
 class Arbalester: Character {
-    override init(name: String?){
+    override init(name: String = ""){
         super.init(name: name)
         job = "arbalester"
         hp = 90
-        availableWeapons = ["diminished": "darts", "usual": "crossbow", "increased": "superarbalest"]
-        currentWeapon = availableWeapons["usual"]!
-        weaponsStrength = ["diminished": 15, "usual": 30, "increased": 60]
-        currentStrength = weaponsStrength["usual"]!
+        availableWeapons = [crossbow, darts, superarbalest]
+        weapon = availableWeapons[0]
         description = "Arbalesters use their crossbows to shoot powerful bolts from a distance."
     }
 }
 
 class Pyromaniac: Character {
-    override init(name: String?) {
+    override init(name: String = "") {
         super.init(name: name)
         job = "pyromaniac"
         hp = 80
-        availableWeapons = ["diminished": "matchbox", "usual": "blowtorch", "increased": "flamethrower"]
-        currentWeapon = availableWeapons["usual"]!
-        weaponsStrength = ["diminished": 20, "usual": 40, "increased": 80]
-        currentStrength = weaponsStrength["usual"]!
-        description = "Pyromaniacs just love fire... maybe a little bit too much sometimes."
+        availableWeapons = [blowtorch, matchbox, flamethrower]
+        weapon = availableWeapons[0]
+        description = "Pyromaniacs love throwing devastating fire at their enemies... but are less resistant than their peers."
     }
 }
 
 class Magus: Character {
-    override init(name: String?) {
+    override init(name: String = "") {
         super.init(name: name)
         job = "magus"
         hp = 70
-        availableWeapons = ["diminished": "foo-foo dust", "usual": "wand", "increased": "magic staff"]
-        currentWeapon = availableWeapons["usual"]!
-        weaponsStrength = ["diminished": 5, "usual": 10, "increased": 20]
-        currentStrength = weaponsStrength["usual"]!
-        description = "Magi aren't very good at fighting, but excel at healing wounds using the power of their wands."
+        availableWeapons = [wand, foofoodust, magicstaff]
+        weapon = availableWeapons[0]
+        description = "Magi don't take part in the fight, but excel at healing wounds using the power of their wands."
     }
     
     override func action(targetCharacter: Character) {
-        print("\(name!) cures \(targetCharacter.name!)!")
-        targetCharacter.hp += currentStrength
-        print("\(targetCharacter.name!) recovers \(currentStrength) health points!")
+        print("\(name) cures \(targetCharacter.name)")
+        targetCharacter.hp += weapon.actionPoints
+        print("\(targetCharacter.name) recovers \(weapon.actionPoints) health points!")
     }
 }

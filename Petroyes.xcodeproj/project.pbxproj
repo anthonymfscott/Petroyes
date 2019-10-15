@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		046BA9102355CDFA00FE152A /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046BA90F2355CDFA00FE152A /* Weapon.swift */; };
 		04B0C88D2344F39A00BF22A7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C88C2344F39A00BF22A7 /* main.swift */; };
 		04B0C8A72344F88B00BF22A7 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C8A62344F88B00BF22A7 /* Game.swift */; };
 		04B0C8A92344F89C00BF22A7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C8A82344F89C00BF22A7 /* Player.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		046BA90F2355CDFA00FE152A /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		04B0C8892344F39A00BF22A7 /* Petroyes */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Petroyes; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B0C88C2344F39A00BF22A7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		04B0C8A62344F88B00BF22A7 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				04B0C8A62344F88B00BF22A7 /* Game.swift */,
 				04B0C8A82344F89C00BF22A7 /* Player.swift */,
 				04B0C8AA2344F8AA00BF22A7 /* Character.swift */,
+				046BA90F2355CDFA00FE152A /* Weapon.swift */,
 			);
 			path = Petroyes;
 			sourceTree = "<group>";
@@ -98,7 +101,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = anthonymfscott;
 				TargetAttributes = {
 					04B0C8882344F39A00BF22A7 = {
@@ -129,6 +132,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046BA9102355CDFA00FE152A /* Weapon.swift in Sources */,
 				04B0C88D2344F39A00BF22A7 /* main.swift in Sources */,
 				04B0C8A92344F89C00BF22A7 /* Player.swift in Sources */,
 				04B0C8A72344F88B00BF22A7 /* Game.swift in Sources */,
@@ -255,6 +259,7 @@
 		04B0C8912344F39A00BF22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -264,6 +269,7 @@
 		04B0C8922344F39A00BF22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
