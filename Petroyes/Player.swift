@@ -22,9 +22,9 @@ class Player {
     }
     
     func describeTeam() {
-        print("\n-> \(name.uppercased())'S TEAM:")
+        print("-> \(name.uppercased())'S TEAM:")
         for character in team {
-            character.describe()
+            character.shortlyDescribe()
         }
     }
     
@@ -37,14 +37,14 @@ class Player {
     
     func selectAlly() -> Character? {
         var allies: [Character] = []
-        for i in 0...team.count - 1 {
-            if !team[i].isDead {
-                allies.append(team[i])
+        for character in team {
+            if !character.isDead {
+                allies.append(character)
             }
         }
         var listOfRemainingAllies = ""
         for i in 0...allies.count - 1 {
-            listOfRemainingAllies += "\(i+1) = \(allies[i].name!) (\(allies[i].currentWeapon))  "
+            listOfRemainingAllies += "\(i+1) = \(allies[i].name)  "
         }
         print("""
             Select one of your allies for the next action:
@@ -63,18 +63,18 @@ class Player {
     
     func selectEnemy(amongst players: [Player]) -> Character? {
         var enemies: [Character] = []
-        for i in 0...players.count -  1 {
-            if players[i] !== self {
-                for j in 0...players[i].team.count - 1 {
-                    if !players[i].team[j].isDead {
-                        enemies.append(players[i].team[j])
+        for player in players {
+            if player !== self {
+                for character in player.team {
+                    if !character.isDead {
+                        enemies.append(character)
                     }
                 }
             }
         }
         var listOfRemainingEnemies = ""
-        for i in 0...enemies.count - 1 {
-            listOfRemainingEnemies += "\(i+1) = \(enemies[i].name!)  "
+        for enemyNumber in 0...enemies.count - 1 {
+            listOfRemainingEnemies += "\(enemyNumber+1) = \(enemies[enemyNumber].name)  "
         }
         print("""
             Select an enemy for the next action:

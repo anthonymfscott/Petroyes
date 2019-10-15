@@ -10,52 +10,65 @@ import Foundation
 
 class Game {
     // MARK: Properties
-    // A series of properties that will be useful to the gameplay
-    enum State {
-        case ongoing, over
-    }
-    var numberOfPlayers: Int
-    var players: [Player] = [] // An array containing the players
-    var numberOfRounds: Int // Counts the number of rounds
+    private var numberOfPlayers: Int
+    private var players: [Player] = [] // An array containing the players
+    private var numberOfRounds: Int // Counts the number of rounds
     static var existingCharacterNames: [String] = [] // Stores the character names that were already created by other players and can't be used again
     enum JobType {
         case mercenary, arbalester, pyromaniac, magus
     }
     
     // MARK: Initialisation
-    // A method that will be called each time a new game begins
     init(numberOfPlayers: Int) {
-        self.numberOfPlayers = numberOfPlayers
+        self.numberOfPlayers = numberOfPlayers // Sets a specific number of players
         numberOfRounds = 0 // Resets the number of rounds to 0
-        print("\n\nWelcome to Petroyes.") // Prints a greeting for the players
-        for i in 1...numberOfPlayers {
-            let newPlayer = Player(number: Int(i))
+        print("WELCOME TO PETROYES.")
+        // Creation of new players:
+        for playerNumber in 1...numberOfPlayers {
+            let newPlayer = Player(number: Int(playerNumber))
             players.append(newPlayer)
         }
-        describeJobs() // Calls the so called method
-        createTeams() // Calls the so called method
-        fight()
+        describeJobs() // Prints a description of the available character types
+        createTeams() // Creates a team of characters for each player
+        fight() // Starts the game
     }
     
-    // A method to create the players' teams of characters
+    func describeJobs() {
+          print("\nHere's a list of the jobs available and their related skills:") // A brief description for the player
+          let playableCharacters = [Mercenary(), Arbalester(), Pyromaniac(), Magus()] // An array containing all available characters without names
+          for playableCharacter in playableCharacters { // A for-in that goes through the 'playableCharacters' array
+              playableCharacter.describeJob() // Calls the so-called method for each character
+          }
+      }
+    
     func createTeams() {
         for player in players { // A for-in that goes through the 'players' array
-            print("\n\(player.name), you can now choose 3 characters for your team."
-                + "\n(1 = Mercenary, 2 = Arbalester, 3 = Pyromaniac, 4 = Magus)")
+            print("""
+                \n\(player.name), you can now choose 3 characters for your team.
+                (1 = mercenary, 2 = arbalester, 3 = pyromaniac, 4 = magus)
+                """)
             while player.team.count < 3 {
                 print("Select a new character:") // Asks each player to select their team
+                var jobType: JobType?
                 if let choice = readLine() {
                     switch choice {
                     case "1":
-                        player.team.append(createCharacter(job: .mercenary)!)
+                        jobType = .mercenary
                     case "2":
-                        player.team.append(createCharacter(job: .arbalester)!)
+                        jobType = .arbalester
                     case "3":
-                        player.team.append(createCharacter(job: .pyromaniac)!)
+                        jobType = .pyromaniac
                     case "4":
-                        player.team.append(createCharacter(job: .magus)!)
+                        jobType = .magus
                     default:
+                        jobType = nil
                         print("Invalid input. Please try again.")
+                    }
+                    if let jobType = jobType, let character = createCharacter(job: jobType) {
+                        player.team.append(character)
+                    } else {
+                        print("The name can't be empty. Please try another input.")
+                        return
                     }
                 }
             }
@@ -68,28 +81,19 @@ class Game {
     
     func createCharacter(job: JobType) -> Character? {
         print("Choose a name for your \(job):")
-        guard let newName = readLine() else {
-            return nil
+        if let newName = readLine() {
+            switch job {
+            case .mercenary:
+                return Mercenary(name: newName)
+            case .arbalester:
+                return Arbalester(name: newName)
+            case .pyromaniac:
+                return Pyromaniac(name: newName)
+            case .magus:
+                return Magus(name: newName)
+            }
         }
-        switch job {
-        case .mercenary:
-            return Mercenary(name: newName)
-        case .arbalester:
-            return Arbalester(name: newName)
-        case .pyromaniac:
-            return Pyromaniac(name: newName)
-        case .magus:
-            return Magus(name: newName)
-        }
-    }
-    
-    // A method to describe the available character types
-    func describeJobs() {
-        print("\nHere's a list of the jobs available and their related skills:") // A brief description for the player
-        let playableCharacters = [Mercenary(name: nil), Arbalester(name: nil), Pyromaniac(name: nil), Magus(name: nil)] // An array containing all available characters without names
-        for character in playableCharacters { // A for-in that goes through the 'playableCharacters' array
-            character.describe() // Calls the so-called method for each character
-        }
+        return nil
     }
     
     // MARK: Fight
@@ -97,23 +101,25 @@ class Game {
         print("\nNow let the fight begin!")
         var remainingPlayers = players
         while numberOfPlayers > 1 {
-            for i in 0...remainingPlayers.count-1 {
-                let activePlayer = remainingPlayers[i]
+            numberOfRounds += 1
+            for activePlayer in remainingPlayers {
                 if activePlayer.team[0].isDead && activePlayer.team[1].isDead && activePlayer.team[2].isDead {
                     print("\n\(activePlayer.name.uppercased())'S TEAM IS DEAD.")
                 } else {
                     print("\n\(activePlayer.name.uppercased())'S TURN:")
-                    if chestAppears() {
+                    if numberOfRounds > 3 && chestAppears() {
                         let randomIndex = Int.random(in: 0...2)
                         if !activePlayer.team[randomIndex].isDead {
-                            print("A chest magically appears in front of \(activePlayer.team[randomIndex].name!)!"
-                                + "\nWould you like to open it and swap \(activePlayer.team[randomIndex].name!)'s \(activePlayer.team[randomIndex].currentWeapon) for the weapon that's hidden inside? (Y/N)")
+                            print("""
+                                A chest magically appears in front of \(activePlayer.team[randomIndex].name)!
+                                Would you like to open it and swap \(activePlayer.team[randomIndex].name)'s \(activePlayer.team[randomIndex].weapon.name) for the weapon that's hidden inside? (Y/N)
+                                """)
                             if let answer = readLine() {
-                                switch answer {
-                                case "Y":
+                                switch answer.lowercased() {
+                                case "y":
                                     print(activePlayer.team[randomIndex].swapsWeapon())
-                                case "N":
-                                    print("\(activePlayer.team[randomIndex].name!) doesn't open the chest. The battle continues!")
+                                case "n":
+                                    print("\(activePlayer.team[randomIndex].name) doesn't open the chest. The battle continues!")
                                 default:
                                     print("Invalid input. The battle continues...")
                                 }
@@ -132,7 +138,6 @@ class Game {
                         }
                     }
                 }
-                numberOfRounds += 1
             }
             print("\nEnd of round \(numberOfRounds):")
             for player in players {
@@ -151,8 +156,10 @@ class Game {
                 remainingPlayers.remove(at: i)
             }
         }
-        print("\nGAME OVER!"
-            + "\n\(remainingPlayers[0].name) wins the battle in \(numberOfRounds) rounds!")
+        print("""
+            \nGAME OVER!
+            \(remainingPlayers[0].name) wins the battle in \(numberOfRounds) rounds!\n\n
+            """)
     }
     
     func chestAppears() -> Bool {
