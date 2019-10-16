@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class Player {
-    internal var number: Int
-    internal var name = ""
-    internal var team: [Character] = []
-    enum JobType {
+final class Player {
+    var number: Int
+    var name = ""
+    var team: [Character] = []
+    private enum JobType {
         case mercenary, arbalester, pyromaniac, magus
     }
     
@@ -24,7 +24,7 @@ public class Player {
         }
     }
     
-    internal func selectCharacters() {
+    func selectCharacters() {
         print("""
             \n\(name), you can now choose 3 characters for your team.
             (1 = mercenary, 2 = arbalester, 3 = pyromaniac, 4 = magus)
@@ -58,7 +58,7 @@ public class Player {
         if let newName = readLine() {
             for existingName in Game.existingCharacterNames {
                 if newName == existingName {
-                    print("This name was already chosen. Please pick another one:")
+                    print("This name was already chosen. Please pick another one.")
                     return nil
                 }
             }
@@ -80,14 +80,14 @@ public class Player {
         return nil
     }
     
-    internal func showStats() {
+    func showStats() {
         print("-> \(name.uppercased())'S TEAM:")
         for character in team {
             character.stats()
         }
     }
     
-    internal func teamIsDead() -> Bool {
+    func teamIsDead() -> Bool {
         if team[0].isDead && team[1].isDead && team[2].isDead {
             return true
         } else {
@@ -95,7 +95,7 @@ public class Player {
         }
     }
     
-    internal func chest() {
+    func chest() {
         let randomIndex = Int.random(in: 0...2)
         if !team[randomIndex].isDead {
             print("""
@@ -105,7 +105,7 @@ public class Player {
             if let answer = readLine() {
                 switch answer.lowercased() {
                 case "y":
-                    print(team[randomIndex].swapsWeapon())
+                    team[randomIndex].swapsWeapon()
                 case "n":
                     print("\(team[randomIndex].name) doesn't open the chest. The battle continues!")
                 default:
@@ -115,7 +115,7 @@ public class Player {
         }
     }
     
-    internal func selectAlly() -> Character? {
+    func selectAlly() -> Character? {
         var allies: [Character] = []
         for character in team {
             if !character.isDead {
@@ -141,7 +141,7 @@ public class Player {
         }
     }
     
-    internal func selectEnemy(amongst players: [Player]) -> Character? {
+    func selectEnemy(amongst players: [Player]) -> Character? {
         var enemies: [Character] = []
         for player in players {
             if player !== self {
