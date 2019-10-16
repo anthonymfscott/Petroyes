@@ -8,7 +8,11 @@
 
 import Foundation
 
-public class Mercenary: Character {
+final class Mercenary: Character {
+    private let sword = Weapon(name: "sword", actionPoints: 15)
+    private let dagger = Weapon(name: "dagger", actionPoints: 7)
+    private let axe = Weapon(name: "axe", actionPoints: 30)
+    
     override init(name: String = "") {
         super.init(name: name)
         job = "mercenary"

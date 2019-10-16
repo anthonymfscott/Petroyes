@@ -8,7 +8,11 @@
 
 import Foundation
 
-public class Magus: Character {
+final class Magus: Character {
+    private let wand = Weapon(name: "wand", actionPoints: 15)
+    private let foofoodust = Weapon(name: "foo-foo dust", actionPoints: 7)
+    private let magicstaff = Weapon(name: "magic staff", actionPoints: 30)
+    
     override init(name: String = "") {
         super.init(name: name)
         job = "magus"

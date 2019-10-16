@@ -8,7 +8,11 @@
 
 import Foundation
 
-public class Arbalester: Character {
+final class Arbalester: Character {
+    private let crossbow = Weapon(name: "crossbow", actionPoints: 20)
+    private let darts = Weapon(name: "darts", actionPoints: 10)
+    private let superarbalest = Weapon(name: "superarbalest", actionPoints: 40)
+    
     override init(name: String = ""){
         super.init(name: name)
         job = "arbalester"

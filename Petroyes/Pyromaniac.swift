@@ -8,7 +8,11 @@
 
 import Foundation
 
-public class Pyromaniac: Character {
+final class Pyromaniac: Character {
+    private let blowtorch = Weapon(name: "blowtorch", actionPoints: 25)
+    private let matchbox = Weapon(name: "matchbox", actionPoints: 12)
+    private let flamethrower = Weapon(name: "flamethrower", actionPoints: 50)
+    
     override init(name: String = "") {
         super.init(name: name)
         job = "pyromaniac"
