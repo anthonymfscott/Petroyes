@@ -23,8 +23,6 @@ final public class Game {
     
     func startGame() {
         print("WELCOME TO PETROYES!")
-        //     let welcome = NSLocalizedString("welcome_title", comment: "")
-        //     print(welcome)
         // Creation of new players:
         for playerNumber in 1...numberOfPlayers {
             let newPlayer = Player(number: Int(playerNumber))
