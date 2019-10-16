@@ -8,18 +8,23 @@
 
 import Foundation
 
-class Game {
+final public class Game {
     // MARK: Properties
     private var numberOfPlayers: Int
     private var players: [Player] = [] // An array containing the players
     private var numberOfRounds: Int // Counts the number of rounds
-    static var existingCharacterNames: [String] = [] // Stores the character names that were already created by other players and can't be used again
+    internal static var existingCharacterNames: [String] = [] // Stores the character names that were already created by other players and can't be used again
     
     // MARK: Initialisation
     init(numberOfPlayers: Int) {
         self.numberOfPlayers = numberOfPlayers // Sets a specific number of players
         numberOfRounds = 0 // Resets the number of rounds to 0
-        print("WELCOME TO PETROYES.")
+    }
+    
+    func startGame() {
+        print("WELCOME TO PETROYES!")
+        //     let welcome = NSLocalizedString("welcome_title", comment: "")
+        //     print(welcome)
         // Creation of new players:
         for playerNumber in 1...numberOfPlayers {
             let newPlayer = Player(number: Int(playerNumber))
