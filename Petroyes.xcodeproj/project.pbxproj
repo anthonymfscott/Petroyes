@@ -12,6 +12,10 @@
 		04B0C8A72344F88B00BF22A7 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C8A62344F88B00BF22A7 /* Game.swift */; };
 		04B0C8A92344F89C00BF22A7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C8A82344F89C00BF22A7 /* Player.swift */; };
 		04B0C8AB2344F8AA00BF22A7 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B0C8AA2344F8AA00BF22A7 /* Character.swift */; };
+		04FB361823570A220085F738 /* Mercenary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB361723570A220085F738 /* Mercenary.swift */; };
+		04FB361A23570A2C0085F738 /* Arbalester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB361923570A2C0085F738 /* Arbalester.swift */; };
+		04FB361C23570A400085F738 /* Pyromaniac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB361B23570A400085F738 /* Pyromaniac.swift */; };
+		04FB361E23570A490085F738 /* Magus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB361D23570A490085F738 /* Magus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +37,10 @@
 		04B0C8A62344F88B00BF22A7 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		04B0C8A82344F89C00BF22A7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		04B0C8AA2344F8AA00BF22A7 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		04FB361723570A220085F738 /* Mercenary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mercenary.swift; sourceTree = "<group>"; };
+		04FB361923570A2C0085F738 /* Arbalester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arbalester.swift; sourceTree = "<group>"; };
+		04FB361B23570A400085F738 /* Pyromaniac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pyromaniac.swift; sourceTree = "<group>"; };
+		04FB361D23570A490085F738 /* Magus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Magus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +77,10 @@
 				04B0C8A62344F88B00BF22A7 /* Game.swift */,
 				04B0C8A82344F89C00BF22A7 /* Player.swift */,
 				04B0C8AA2344F8AA00BF22A7 /* Character.swift */,
+				04FB361723570A220085F738 /* Mercenary.swift */,
+				04FB361923570A2C0085F738 /* Arbalester.swift */,
+				04FB361B23570A400085F738 /* Pyromaniac.swift */,
+				04FB361D23570A490085F738 /* Magus.swift */,
 				046BA90F2355CDFA00FE152A /* Weapon.swift */,
 			);
 			path = Petroyes;
@@ -132,10 +144,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FB361A23570A2C0085F738 /* Arbalester.swift in Sources */,
 				046BA9102355CDFA00FE152A /* Weapon.swift in Sources */,
 				04B0C88D2344F39A00BF22A7 /* main.swift in Sources */,
 				04B0C8A92344F89C00BF22A7 /* Player.swift in Sources */,
 				04B0C8A72344F88B00BF22A7 /* Game.swift in Sources */,
+				04FB361E23570A490085F738 /* Magus.swift in Sources */,
+				04FB361823570A220085F738 /* Mercenary.swift in Sources */,
+				04FB361C23570A400085F738 /* Pyromaniac.swift in Sources */,
 				04B0C8AB2344F8AA00BF22A7 /* Character.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

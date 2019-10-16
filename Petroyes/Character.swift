@@ -8,13 +8,13 @@
 
 import Foundation
 
-class Character {
+public class Character {
     var name = ""
     var job = ""
     var hp = 0
-    var availableWeapons: [Weapon] = []
+    internal var availableWeapons: [Weapon] = []
     var weapon = Weapon(name: "", actionPoints: 0)
-    var description = ""
+    internal var description = ""
     var isDead = false
     
     init(name: String) {
@@ -24,7 +24,7 @@ class Character {
         }
     }
     
-    func describeJob() {
+    func describe() {
         print("""
             - \(job.uppercased())
                 \(description)
@@ -34,16 +34,12 @@ class Character {
             """)
     }
     
-    func shortlyDescribe() {
-        print("     \(name), \(job)")
-    }
-    
     func stats() {
         print("     \(name) (\(weapon.name)): \(hp) hp")
     }
     
     func action(targetCharacter: Character) {
-        print("\(name) hits \(targetCharacter.name)")
+        print("\(name) hits \(targetCharacter.name)!")
         targetCharacter.hp -= weapon.actionPoints
         print("\(targetCharacter.name) loses \(weapon.actionPoints) health points!")
         if targetCharacter.hp <= 0 {
@@ -68,56 +64,5 @@ class Character {
         default:
             return "Nothing happens."
         }
-    }
-}
-
-// MARK: Subclasses
-class Mercenary: Character {
-    override init(name: String = "") {
-        super.init(name: name)
-        job = "mercenary"
-        hp = 100
-        availableWeapons = [sword, dagger, axe]
-        weapon = availableWeapons[0]
-        description = "Mercenaries are very tough, experts at close-range fighting using all types of swords."
-    }
-}
-
-class Arbalester: Character {
-    override init(name: String = ""){
-        super.init(name: name)
-        job = "arbalester"
-        hp = 90
-        availableWeapons = [crossbow, darts, superarbalest]
-        weapon = availableWeapons[0]
-        description = "Arbalesters use their crossbows to shoot powerful bolts from a distance."
-    }
-}
-
-class Pyromaniac: Character {
-    override init(name: String = "") {
-        super.init(name: name)
-        job = "pyromaniac"
-        hp = 80
-        availableWeapons = [blowtorch, matchbox, flamethrower]
-        weapon = availableWeapons[0]
-        description = "Pyromaniacs love throwing devastating fire at their enemies... but are less resistant than their peers."
-    }
-}
-
-class Magus: Character {
-    override init(name: String = "") {
-        super.init(name: name)
-        job = "magus"
-        hp = 70
-        availableWeapons = [wand, foofoodust, magicstaff]
-        weapon = availableWeapons[0]
-        description = "Magi don't take part in the fight, but excel at healing wounds using the power of their wands."
-    }
-    
-    override func action(targetCharacter: Character) {
-        print("\(name) cures \(targetCharacter.name)")
-        targetCharacter.hp += weapon.actionPoints
-        print("\(targetCharacter.name) recovers \(weapon.actionPoints) health points!")
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Weapon {
+public class Weapon {
     var name: String
     var actionPoints: Int
     
