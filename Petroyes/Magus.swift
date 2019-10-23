@@ -10,19 +10,19 @@ import Foundation
 
 final class Magus: Character {
     private let wand = Weapon(name: "wand", actionPoints: 15)
-    private let foofoodust = Weapon(name: "foo-foo dust", actionPoints: 7)
-    private let magicstaff = Weapon(name: "magic staff", actionPoints: 30)
+    private let fooFooDust = Weapon(name: "foo-foo dust", actionPoints: 7)
+    private let magicStaff = Weapon(name: "magic staff", actionPoints: 30)
     
     override init(name: String = "") {
         super.init(name: name)
         job = "magus"
         hp = 70
-        availableWeapons = [wand, foofoodust, magicstaff]
+        availableWeapons = [wand, fooFooDust, magicStaff]
         weapon = availableWeapons[0]
         description = "Magi don't take part in the fight, but excel at healing wounds using the power of their wands."
     }
     
-    override func action(targetCharacter: Character) {
+    override func takeAction(targetCharacter: Character) {
         if targetCharacter.name != name {
             print("\(name) cures \(targetCharacter.name)!")
         }
