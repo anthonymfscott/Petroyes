@@ -8,12 +8,7 @@
 
 import Foundation
 
-final class Weapon {
+struct Weapon {
     var name: String
     var actionPoints: Int
-    
-    init(name: String, actionPoints: Int) {
-        self.name = name
-        self.actionPoints = actionPoints
-    }
 }
