@@ -9,6 +9,7 @@
 import Foundation
 
 class Character {
+    // MARK: Properties
     var name = ""
     var job = ""
     var hp = 0
@@ -52,6 +53,7 @@ class Character {
         }
     }
     
+    // MARK: Creation of characters
     init(name: String) {
         if !name.isEmpty { // (if the name isn't empty)
             self.name = name
@@ -60,6 +62,7 @@ class Character {
         weaponComparison = .same
     }
     
+    // MARK: Printing information
     func describe() {
         print("""
             - \(job.uppercased())
@@ -74,6 +77,7 @@ class Character {
         print("     \(name) (\(weapon.name)): \(hp) hp")
     }
     
+    // MARK: Fight phase
     func takeAction(targetCharacter: Character) {
         print("\(name) hits \(targetCharacter.name)!")
         targetCharacter.hp -= weapon.actionPoints // Takes away the according number of health points
@@ -85,6 +89,7 @@ class Character {
         }
     }
     
+    // MARK: Chest management
     func swapWeapons() {
         let randomNumber = Int.random(in: 0...2) // Selects a random number between 0, 1 and 2
         switch randomNumber { // Selects a weapon in the available weapons' array according to the random number

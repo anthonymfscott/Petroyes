@@ -89,18 +89,8 @@ public final class Game {
             }
         }
         print("\nEnd of round \(numberOfRounds):")
-        
         for player in players {
             player.showStats() // Shows statistics at the end of the round
-        }
-    }
-    
-    private func chestAppears() -> Bool {
-        let randomNumber = Int.random(in: 0...2) // Chooses a random number between 0, 1 and 2
-        if randomNumber == 0 {
-            return true // Returns true if the number is 0
-        } else {
-            return false // Returns false in the two other cases (1 chance out of 3 for a chest to appear)
         }
     }
     
@@ -121,6 +111,18 @@ public final class Game {
         return remainingPlayers // Returns the modified array
     }
     
+    // MARK: Chest management
+    private func chestAppears() -> Bool {
+        let randomNumber = Int.random(in: 0...2) // Chooses a random number between 0, 1 and 2
+        if randomNumber == 0 {
+            return true // Returns true if the number is 0
+        } else {
+            return false // Returns false in the two other cases (1 chance out of 3 for a chest to appear)
+        }
+    }
+    
+    
+    // MARK: End of the game
     private func endGame(remainingPlayers: [Player]) {
         print("""
             \nGAME OVER!

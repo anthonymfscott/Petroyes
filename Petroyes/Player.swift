@@ -17,6 +17,7 @@ final class Player {
         case mercenary, arbalester, pyromaniac, magus
     }
     
+    // MARK: Creation of players
     init(number: Int) {
         self.number = number
         print("\nChoose a name for Player \(number):")
@@ -25,6 +26,7 @@ final class Player {
         }
     }
     
+    // MARK: Creation of characters
     func selectCharacters() {
         print("""
             \n\(name), you can now choose 3 characters for your team.
@@ -56,17 +58,21 @@ final class Player {
     
     private func createCharacter(job: JobType) -> Character? {
         print("Choose a name for your \(job):")
+        
         if let newName = readLine() { // Lets the player choose a name for his character
+            
             for existingName in Game.existingCharacterNames {
                 if newName == existingName { // Compares the new name with every existing name, and goes back to the previous logic without creating a character if there's a match
                     print("This name was already chosen. Please pick another one.")
                     return nil
                 }
             }
+            
             if newName.count < 3 { // Goes back to the previous logic if the chosen name contains less than 3 characters
                 print("The name must have at least 3 characters. Please try again.")
                 return nil
             }
+            
             switch job { // Creates an instance of the chosen Character subclass
             case .mercenary:
                 return Mercenary(name: newName)
@@ -77,10 +83,12 @@ final class Player {
             case .magus:
                 return Magus(name: newName)
             }
+            
         }
         return nil // (in case the player doesn't enter a valid input)
     }
     
+    // MARK: Printing information
     func showStats() {
         print("-> \(name.uppercased())'S TEAM:")
         for character in team {
@@ -88,34 +96,7 @@ final class Player {
         }
     }
     
-    func teamIsDead() -> Bool {
-        if team[0].isDead && team[1].isDead && team[2].isDead {
-            return true
-        } else {
-            return false // Returns true if every character in the team is dead, false if not
-        }
-    }
-    
-    func manageChest() {
-        let randomIndex = Int.random(in: 0...2) // Creates a random index between 0, 1 and 2
-        if !team[randomIndex].isDead { // Performs the following logic if the character at the random index isn't dead
-            print("""
-                A chest magically appears in front of \(team[randomIndex].name)!
-                Would you like to open it and swap \(team[randomIndex].name)'s \(team[randomIndex].weapon.name) for the weapon that's hidden inside? (Y/N)
-                """)
-            if let answer = readLine() {
-                switch answer.lowercased() {
-                case "y":
-                    team[randomIndex].swapWeapons()
-                case "n":
-                    print("\(team[randomIndex].name) doesn't open the chest. The battle continues!")
-                default:
-                    print("Invalid input. The battle continues...")
-                }
-            }
-        }
-    }
-    
+    // MARK: Fight phase
     func selectAlly() -> Character? {
         var allies: [Character] = [] // Creates an empty array of allies
         for character in team {
@@ -134,12 +115,12 @@ final class Player {
         guard let choice = readLine() else { // Asks for the player's choice
             return nil
         }
-        if Int(choice)! > 0 && Int(choice)! <= allies.count {
-            return allies[Int(choice)! - 1] // If the choice is more than 0 and maximum the last number in the list of allies, returns the selected character
-        } else {
-            print("Invalid input. Next player's turn.")
-            return nil // Otherwise, goes back to the previous logic witout returning anything
+        guard let intValue = Int(choice),
+            (intValue > 0 && intValue <= allies.count) else {
+                print("Invalid input. Next player's turn.")
+                return nil // Otherwise, goes back to the previous logic witout returning anything
         }
+        return allies[intValue - 1] // If the choice is more than 0 and maximum the last number in the list of allies, returns the selected character
     }
     
     func selectEnemy(amongst players: [Player]) -> Character? {
@@ -164,11 +145,41 @@ final class Player {
         guard let choice = readLine() else {
             return nil
         }
-        if Int(choice)! > 0 && Int(choice)! <= enemies.count {
-            return enemies[Int(choice)! - 1]
+        guard let intValue = Int(choice),
+            (intValue > 0 && intValue <= enemies.count) else {
+                print("Invalid input. Next player's turn.")
+                return nil
+        }
+        return enemies[intValue - 1]
+    }
+    
+    func teamIsDead() -> Bool {
+        if team[0].isDead && team[1].isDead && team[2].isDead {
+            return true
         } else {
-            print("Invalid input. Next player's turn.")
-            return nil
+            return false // Returns true if every character in the team is dead, false if not
         }
     }
+    
+    // MARK: Chest management
+    func manageChest() {
+        let randomIndex = Int.random(in: 0...2) // Creates a random index between 0, 1 and 2
+        if !team[randomIndex].isDead { // Performs the following logic if the character at the random index isn't dead
+            print("""
+                A chest magically appears in front of \(team[randomIndex].name)!
+                Would you like to open it and swap \(team[randomIndex].name)'s \(team[randomIndex].weapon.name) for the weapon that's hidden inside? (Y/N)
+                """)
+            if let answer = readLine() {
+                switch answer.lowercased() {
+                case "y":
+                    team[randomIndex].swapWeapons()
+                case "n":
+                    print("\(team[randomIndex].name) doesn't open the chest. The battle continues!")
+                default:
+                    print("Invalid input. The battle continues...")
+                }
+            }
+        }
+    }
+    
 }
