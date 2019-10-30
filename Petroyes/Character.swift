@@ -9,12 +9,13 @@
 import Foundation
 
 class Character {
+    // MARK: Properties
     var name = ""
     var job = ""
     var hp = 0
     var availableWeapons: [Weapon] = []
     var weapon = Weapon(name: "", actionPoints: 0) {
-        didSet {
+        didSet { // Selects a case of WeaponComparison according to the comparison between the old and the new value
             if oldValue.actionPoints < weapon.actionPoints {
                 weaponComparison = .better
             } else if oldValue.actionPoints > weapon.actionPoints {
@@ -26,26 +27,49 @@ class Character {
     }
     var description = ""
     var isDead = false
-    private enum WeaponComparison {
-        case same, better, worse
-    }
     private var weaponComparison: WeaponComparison
     
+    private enum WeaponComparison {
+        case same, better, worse
+        var exclamation: String {
+            switch self {
+            case .same:
+                return "Nothing changes!"
+            case .better:
+                return "How lucky!"
+            case .worse:
+                return "Too bad!"
+            }
+        }
+        var strengthDescription: String {
+            switch self {
+            case .same:
+                return "the same"
+            case .better:
+                return "a stronger"
+            case .worse:
+                return "a weaker"
+            }
+        }
+    }
+    
+    // MARK: Creation of characters
     init(name: String) {
-        if !name.isEmpty {
+        if !name.isEmpty { // (if the name isn't empty)
             self.name = name
-            Game.existingCharacterNames.append(name)
+            Game.existingCharacterNames.append(name) // Appends the name to the existing character names' array
         }
         weaponComparison = .same
     }
     
+    // MARK: Printing information
     func describe() {
         print("""
             - \(job.uppercased())
-                \(description)
-                health points: \(hp)
-                weapon: \(weapon.name)
-                action points: \(weapon.actionPoints)
+            \(description)
+            health points: \(hp)
+            weapon: \(weapon.name)
+            action points: \(weapon.actionPoints)
             """)
     }
     
@@ -53,20 +77,22 @@ class Character {
         print("     \(name) (\(weapon.name)): \(hp) hp")
     }
     
-    func action(targetCharacter: Character) {
+    // MARK: Fight phase
+    func takeAction(targetCharacter: Character) {
         print("\(name) hits \(targetCharacter.name)!")
-        targetCharacter.hp -= weapon.actionPoints
+        targetCharacter.hp -= weapon.actionPoints // Takes away the according number of health points
         print("\(targetCharacter.name) loses \(weapon.actionPoints) health points!")
         if targetCharacter.hp <= 0 {
             targetCharacter.hp = 0
             targetCharacter.isDead = true
-            print("\(targetCharacter.name) is dead!")
+            print("\(targetCharacter.name) is dead!") // Sets the statistics if the target character is killed
         }
     }
     
-    func swapsWeapon() {
-        let randomNumber = Int.random(in: 0...2)
-        switch randomNumber {
+    // MARK: Chest management
+    func swapWeapons() {
+        let randomNumber = Int.random(in: 0...2) // Selects a random number between 0, 1 and 2
+        switch randomNumber { // Selects a weapon in the available weapons' array according to the random number
         case 0:
             weapon = availableWeapons[0]
         case 1:
@@ -74,13 +100,6 @@ class Character {
         default:
             weapon = availableWeapons[2]
         }
-        switch weaponComparison {
-        case .better:
-            print("How lucky! \(name) opens the chest and gets a stronger weapon: \(weapon.name.uppercased()) (action points: \(weapon.actionPoints)).")
-        case .worse:
-            print("Too bad! \(name) opens the chest and gets a weaker weapon: \(weapon.name.uppercased()) (action points: \(weapon.actionPoints)).")
-        case .same:
-            print("Nothing changes! \(name) opens the chest and finds the same weapon: \(weapon.name.uppercased()) (action points: \(weapon.actionPoints)).")
-        }
+        print("\(weaponComparison.exclamation) \(name) opens the chest and gets \(weaponComparison.strengthDescription) weapon: \(weapon.name.uppercased()) (action points: \(weapon.actionPoints)).")
     }
 }
